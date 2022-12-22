@@ -27,7 +27,7 @@ function App () {
           <SignUp setShowRegister={setShowRegister}/>
           <Footer/>
           {showPopUp ? <PopUp setShowPopUp={setShowPopUp} setShowRegister={setShowRegister}/> : ''}
-          {showRegister ? <Register setShowRegister={setShowRegister}/> : ''} <ToastContainer
+          {showRegister ? <Register setShowRegister={setShowRegister} setShowPopUp={setShowPopUp} /> : ''} <ToastContainer
 position="top-center"
 closeOnClick
 rtl={false}

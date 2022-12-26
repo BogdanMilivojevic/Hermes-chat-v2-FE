@@ -1,28 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { Bird } from 'phosphor-react'
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { UserContext } from '../../context/UserContext'
 
 const Navbar = () => {
-  const [currentUser, setUser] = useState('')
-  // Current user
-  useEffect(() => {
-    const token = localStorage.getItem('token')
-    const getUser = async () => {
-      try {
-        const u = await axios.post('http://127.0.0.1:4000/user', {
-          token
-        })
-        console.log(u)
-        setUser(u)
-      } catch (err) {
-        console.log(err)
-      }
-    }
-    getUser()
-  }, [])
-
   const navigate = useNavigate()
+
+  const { currentUser } = useContext(UserContext)
 
   const signout = () => {
     localStorage.removeItem('token')

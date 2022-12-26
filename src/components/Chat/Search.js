@@ -2,12 +2,12 @@ import React, { useState, useMemo, useContext } from 'react'
 import debounce from 'lodash.debounce'
 import { MagnifyingGlass } from 'phosphor-react'
 import axios from 'axios'
-import { UserContext } from '../../context/UserContext'
+import { ConversationContext } from '../../context/ConversationContext'
 
 const Search = () => {
   const [searchedUser, setSearchedUser] = useState('')
   const [notFound, setNotFound] = useState(false)
-  const { currentUser } = useContext(UserContext)
+  const { setIsNew } = useContext(ConversationContext)
   // User search
   const searchUser = async (username) => {
     if (!username) {
@@ -17,14 +17,10 @@ const Search = () => {
     }
 
     try {
-      const u = await axios.post(`${process.env.REACT_APP_BASE_URL}/user/getSearchedUser`, {
-        username
-
-      })
-      setSearchedUser(u)
+      const u = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/${username}`)
+      u.data.message === 'User found' ? setSearchedUser(u.data.user) : setNotFound(true)
     } catch (err) {
-      setSearchedUser('')
-      setNotFound(true)
+      console.log(err)
     }
   }
 
@@ -32,16 +28,24 @@ const Search = () => {
     () => debounce(searchUser, 500)
     , [])
 
-  const createConversation = async (searchedUserUsername) => {
+  const createConversation = async (searchedUserUsername, setSearchedUser) => {
+    const input = document.getElementById('input')
     try {
-      const currentUserUsername = currentUser.username
-      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/conversation/createConversation`, {
-        searchedUserUsername,
-        currentUserUsername
+      const token = localStorage.getItem('token')
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/conversation`, {
+        searchedUserUsername
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       })
+      setIsNew(true)
     } catch (err) {
       console.log(err)
     }
+    input.value = ''
+    setSearchedUser('')
+    setNotFound(false)
   }
 
   return (
@@ -55,10 +59,10 @@ const Search = () => {
           <span className='user-name'>No user found!</span>
         </div>
         </div>}
-      {searchedUser && <div className='user-chat searched' onClick={() => createConversation(searchedUser.data.user.username)}>
-        <img className='user-picture' src={searchedUser.data.user.photoURL}/>
+      {searchedUser && <div className='user-chat searched' onClick={() => createConversation(searchedUser.username, setSearchedUser)}>
+        <img className='user-picture' src={searchedUser.photoURL}/>
         <div className='user-info'>
-          <span className='user-name'>{searchedUser.data.user.username}</span>
+          <span className='user-name'>{searchedUser.username}</span>
         </div>
       </div>}
     </div>

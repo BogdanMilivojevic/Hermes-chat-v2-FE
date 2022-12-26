@@ -1,41 +1,47 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Image, FileText } from 'phosphor-react'
-import { doc, onSnapshot } from 'firebase/firestore'
-import { db } from '../../firebase'
-import { AuthContext } from '../../context/AuthContext'
 import { ChatContext } from '../../context/ChatContext'
+import { UserContext } from '../../context/UserContext'
+import axios from 'axios'
 
 const Chats = ({ setChat }) => {
-  const [chats, setChats] = useState([])
-  const { currentUser } = useContext(AuthContext)
+  const [chats, setChats] = useState('')
+  const { currentUser } = useContext(UserContext)
   const { dispatch } = useContext(ChatContext)
 
   useEffect(() => {
-    const getChats = () => {
-      const unsub = onSnapshot(doc(db, 'userConversations', currentUser.uid), (doc) => {
-        setChats(doc.data())
-      })
+    const getChats = async () => {
+      try {
+        const id = currentUser.id
+        const c = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/conversation/getConversations`, {
+          id
+        })
+        setChats(c.data.dataArr)
+      } catch (err) {
+        console.log(err)
+      }
       return () => {
-        unsub()
+        getChats()
       }
     }
-    currentUser.uid && getChats()
-  }, [currentUser.uid])
+    (currentUser && chats.length === 0) && getChats()
+  }, [currentUser])
 
   const handleSelect = (u) => {
     dispatch({ type: 'CHANGE_USER', payload: u })
   }
   return (
+
     <div className='chats'>
-      {Object.entries(chats)?.sort((a, b) => b[1].date - a[1].date).map((chat) => (
-        <div className='user-chat' key={chat[0]} onClick={() => { handleSelect(chat[1].userInfo); setChat() }}>
-          {chat[1].userInfo.photoURL && <img className='user-picture' src={chat[1].userInfo.photoURL}/>}
+      { chats.length > 0 && chats.map((chat, i) => (
+        <div className='user-chat' key={i} onClick={() => { handleSelect(chat); setChat() }}>
+          {chat.u['User.photoURL'] && <img className='user-picture' src={chat.u['User.photoURL']}/>}
           <div className='user-info'>
-            <span className='user-name'>{chat[1].userInfo.displayName}</span>
-            <p className='last-m'>{chat[1].lastMessage?.text}</p>
-            {chat[1].lastMessage?.text.length === 0 && <p className='last-m-content'>
+            {chat.u['User.username'] && <span className='user-name'> {chat.u['User.username']}</span>}
+            {chat.c && <p className='last-m'>{chat.c[chat.c.length - 1].body}</p>}
+            {/* <p className='last-m-content'>
               <Image className='last-m-icon'/>
-              <FileText className='last-m-icon'/>Image/File</p>}
+              <FileText className='last-m-icon'/>Image/File</p> */}
           </div>
         </div>
       ))}

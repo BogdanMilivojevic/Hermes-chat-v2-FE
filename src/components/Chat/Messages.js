@@ -1,39 +1,19 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import Message from './Message'
 import { ChatContext } from '../../context/ChatContext'
-import { onSnapshot, collection, query, limit, orderBy } from 'firebase/firestore'
-import { db } from '../../firebase'
+import axios from 'axios'
 const Messages = () => {
-  const [messages, setMessages] = useState([])
+  const [messages, setMessages] = useState('')
   const { data } = useContext(ChatContext)
   const [messageCount, setMessageCount] = useState(25)
   const [loading, setLoading] = useState(false)
   const myRef = useRef()
   const lastIndex = messages.length - 1
 
-  useEffect(() => {
-    const getMessages = async () => {
-      const messagesRef = collection(db, 'conversations', data.chatId, 'messages')
-      const q = query(messagesRef, orderBy('date', 'desc'), limit(messageCount))
-
-      const unsub = onSnapshot(q, (querySnapshot) => {
-        const tempMessages = []
-        querySnapshot.forEach((doc) => {
-          tempMessages.push(doc.data())
-        })
-        setMessages(tempMessages.reverse())
-      })
-      return () => {
-        unsub()
-      }
-    }
-    data.chatId && getMessages()
-  }, [data.chatId, messageCount])
-
   // Used to reset count if switched to new chat
   useEffect(() => {
     setMessageCount(25)
-  }, [data.chatId])
+  }, [data])
 
   const fetchMore = () => {
     setLoading(true)
@@ -72,13 +52,32 @@ const Messages = () => {
   // Scrolling to the latest message if there is a new latest message
   useEffect(() => {
     myRef.current.lastElementChild?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages[lastIndex] ? messages[lastIndex].id : null])
+  }, [messages[lastIndex] ? messages[lastIndex].body : null])
+
+  useEffect(() => {
+    const getMessages = async () => {
+      const conversationId = data.user.ConversationId
+      try {
+        const conversation = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/conversation/getMessages`, {
+          conversationId,
+          messageCount
+        })
+        setMessages(conversation.data.conversation)
+      } catch (err) {
+        console.log(err)
+      }
+      return () => {
+        getMessages()
+      }
+    }
+    data && getMessages()
+  }, [data, messageCount])
 
   return (
     <div className='messages' ref={myRef}>
       { loading && <p className='messages-loading'>Fetching older messages...</p>}
-      {messages.length > 0 && messages.map(message => (
-        <Message message ={message} key={message.id}/>
+      {messages.length > 0 && messages.map((message, i) => (
+        <Message message ={message} key={i}/>
       ))}
     </div>
   )

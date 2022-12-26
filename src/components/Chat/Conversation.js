@@ -2,22 +2,20 @@ import React, { useContext, useEffect, useState } from 'react'
 import Messages from './Messages'
 import Input from './Input'
 import { ChatContext } from '../../context/ChatContext'
-import { AuthContext } from '../../context/AuthContext'
-import { doc, onSnapshot } from 'firebase/firestore'
-import { db } from '../../firebase'
 import sound from '../../sound/notification-sound.mp3'
 import { Bird } from 'phosphor-react'
+import { UserContext } from '../../context/UserContext'
 
 const Conversation = ({ setShowChat }) => {
   const { data } = useContext(ChatContext)
-  const { currentUser } = useContext(AuthContext)
+  const { currentUser } = useContext(UserContext)
   const [userData, setUserData] = useState({})
   const [count, setCount] = useState(0)
 
   // New Message notification
   const showNotification = (count) => {
     const newCount = count + 1
-    if (document.hidden && currentUser.uid) {
+    if (document.hidden && currentUser.id) {
       setCount(newCount)
       document.title = `(${newCount}) Messages`
       const audio = new Audio(sound)
@@ -48,13 +46,13 @@ const Conversation = ({ setShowChat }) => {
     }
   }
 
-  if (data.chatId) {
+  if (data) {
     return (
       <div className='chat'>
         <div className='chat-info'>
           <button className='back-btn' onClick={() => setShowChat(false)}> Go back</button>
-          {data.user && <span>{data.user?.displayName}</span>}
-          {data.user.photoURL && <img src={data.user.photoURL}/>}
+          {data.user && <span>{data.user['User.username']}</span>}
+          {data.user && <img src={data.user['User.photoURL']}/>}
           <div className='navbar-logo-chat'>
             <Bird className='navbar-icon'/>
             <p>Hermes-Chat</p>

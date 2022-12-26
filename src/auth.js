@@ -15,7 +15,7 @@ export const register = async (email, password, username, file, passwordConfirm,
         try {
           const user = await axios({
             method: 'POST',
-            url: `${process.env.REACT_APP_API_REGISTER_URL}`,
+            url: `${process.env.REACT_APP_API_BASE_URL}/user/register`,
             data: {
               username,
               email,
@@ -42,7 +42,7 @@ export const register = async (email, password, username, file, passwordConfirm,
 }
 export const login = async (email, password, navigate, setShowPopUp) => {
   try {
-    const user = await axios.post(`${process.env.REACT_APP_API_LOGIN_URL}`, {
+    const user = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/user/login`, {
       email,
       password
     })

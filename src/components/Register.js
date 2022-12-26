@@ -6,6 +6,7 @@ import { Image, ArrowCircleLeft } from 'phosphor-react'
 const Register = ({ setShowRegister, setShowPopUp }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [passwordConfirm, setPasswordConfirm] = useState('')
   const [username, setUsername] = useState('')
   const [file, setFile] = useState(null)
 
@@ -15,15 +16,11 @@ const Register = ({ setShowRegister, setShowPopUp }) => {
   const onSubmit = (e) => {
     e.preventDefault()
 
-    if (!email || !password || !username || !file) {
+    if (!email || !password || !username || !file || !passwordConfirm) {
       alert('Please fill-in all data')
       return
     }
-    register(email, password, username, file, navigate, setShowRegister)
-    setUsername('')
-    setEmail('')
-    setPassword('')
-    setFile(null)
+    register(email, password, username, file, passwordConfirm, navigate, setShowRegister, setUsername, setEmail, setPassword, setFile, setPasswordConfirm)
   }
 
   return (
@@ -37,17 +34,21 @@ const Register = ({ setShowRegister, setShowPopUp }) => {
             setShowRegister(false)}>X</button>
         </div>
         <form className='login-form' onSubmit={onSubmit}>
-          <div className='form-label-username'>
+          <div className='form-label-register-username'>
             <label>Username</label>
             <input type='text' placeholder='Your username' value={username} onChange={(e) => setUsername(e.target.value)}/>
           </div>
-          <div className='form-label-email'>
+          <div className='form-label-register-email'>
             <label>Email</label>
             <input type='email' placeholder='Your email' value={email} onChange={(e) => setEmail(e.target.value)}/>
           </div>
-          <div className='form-label-password'>
+          <div className='form-label-register-password'>
             <label>Password</label>
             <input type='password' placeholder='Your password' value={password} onChange={(e) => setPassword(e.target.value)}/>
+          </div>
+          <div className='form-label-register-confirm-password'>
+            <label>Password Confirm</label>
+            <input type='password' placeholder='Your password' value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)}/>
           </div>
           <label className='form-label-image' htmlFor="file">
             <input style={{ display: 'none' }} type="file" id="file"onChange={(e) => setFile(e.target.files[0])} />

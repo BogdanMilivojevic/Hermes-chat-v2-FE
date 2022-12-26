@@ -1,58 +1,56 @@
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth'
-import { auth, db, storage } from './firebase'
+import { storage } from './firebase'
 import { toast } from 'react-toastify'
-import { setDoc, doc } from 'firebase/firestore'
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
+import axios from 'axios'
 
 // REGISTER USER
-export const register = async (email, password, username, file, navigate, setShowRegister) => {
+export const register = async (email, password, username, file, passwordConfirm, navigate, setShowRegister, setUsername, setEmail, setPassword, setFile, setPasswordConfirm) => {
   try {
-    const res = await createUserWithEmailAndPassword(auth, email, password)
     const date = new Date().getTime()
     const storageRef = ref(storage, `${username + date}`)
 
     await uploadBytesResumable(storageRef, file).then(() => {
       getDownloadURL(storageRef).then(async (downloadURL) => {
         try {
-        // Update profile
-          await updateProfile(res.user, {
-            displayName: username,
-            photoURL: downloadURL
+          const user = await axios({
+            method: 'POST',
+            url: `${process.env.REACT_APP_API_REGISTER_URL}`,
+            data: {
+              username,
+              email,
+              password,
+              passwordConfirm,
+              photoURL: downloadURL
+            }
           })
-          // create user on firestore
-          await setDoc(doc(db, 'users', res.user.uid), {
-            uid: res.user.uid,
-            displayName: username,
-            email,
-            photoURL: downloadURL
-          })
-
-          // create empty user chats on firestore
-          await setDoc(doc(db, 'userConversations', res.user.uid), {})
           navigate('/chat')
           setShowRegister(false)
+          setUsername('')
+          setEmail('')
+          setPassword('')
+          setFile(null)
+          setPasswordConfirm('')
+          localStorage.setItem('token', user.data.token)
         } catch (err) {
-          console.log(err.message)
+          toast.error(err.response.data.message)
         }
       })
     })
-  } catch (error) {
-    toast.error('Password or email are not correctly written, please try again')
+  } catch (err) {
+    console.log(err)
   }
 }
-// USER LOGIN
 export const login = async (email, password, navigate, setShowPopUp) => {
+  console.log(process.env.REACT_APP_API_LOGIN_URL)
   try {
-    await signInWithEmailAndPassword(auth, email, password)
-    setShowPopUp(false)
+    const user = await axios.post(`${process.env.REACT_APP_API_LOGIN_URL}`, {
+      email,
+      password
+    })
     navigate('/chat')
-  } catch (error) {
-    console.log(error.message)
-    toast.error('Email or password is wrong, please try again')
+    setShowPopUp(false)
+    localStorage.setItem('token', user.data.token)
+  } catch (err) {
+    toast.error(err.response.data.message)
   }
-}
-// LOGOUT USER
-export const logoutUser = async (navigate) => {
-  await signOut(auth)
-  navigate('/')
 }

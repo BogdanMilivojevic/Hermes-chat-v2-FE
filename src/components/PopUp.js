@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { login } from '../auth'
 import { useNavigate } from 'react-router-dom'
+import { login } from '../auth'
 
 const PopUp = ({ setShowPopUp, setShowRegister }) => {
   const [email, setEmail] = useState('')

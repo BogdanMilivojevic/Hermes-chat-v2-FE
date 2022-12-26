@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { register } from '../auth'
 import { useNavigate } from 'react-router-dom'
-import { Image } from 'phosphor-react'
+import { Image, ArrowCircleLeft } from 'phosphor-react'
 
-const Register = ({ setShowRegister }) => {
+const Register = ({ setShowRegister, setShowPopUp }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [username, setUsername] = useState('')
@@ -32,6 +32,7 @@ const Register = ({ setShowRegister }) => {
       <div className='login-container' onClick={(e) => e.stopPropagation()}>
         <div className='x-container'>
           <h1>Register your account</h1>
+          <ArrowCircleLeft className='back-register-btn' onClick={() => { setShowRegister(false); setShowPopUp(true) }}/>
           <button className='x-btn' onClick={() =>
             setShowRegister(false)}>X</button>
         </div>

@@ -40,6 +40,9 @@ const PopUp = ({ setShowPopUp, setShowRegister }) => {
           <button className='login-btn'>Login</button>
         </form>
         <div className='btn-container'>
+          <button className='forgotpass-btn'>Forgot password?</button>
+        </div>
+        <div className='btn-container'>
           <button className='login-btn'onClick={() => { setShowRegister(true); setShowPopUp(false) }}>Create an account</button>
         </div>
       </div>

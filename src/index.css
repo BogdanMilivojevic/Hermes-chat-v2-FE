@@ -384,14 +384,30 @@ body {
   gap: 75px;
 }
 
-.form-label-username {
+.form-label-register-email {
   display: flex;
-  gap: 22px;
+  gap: 165px;
+}
+
+
+.form-label-register-username {
+  display: flex;
+  gap: 110px;
 }
 
 .form-label-password {
   display: flex;
   gap: 27px;
+}
+
+.form-label-register-password {
+  display: flex;
+  gap: 115px;
+}
+
+.form-label-register-confirm-password {
+  display: flex;
+  gap: 20px;
 }
 
 .form-label-image {
@@ -446,7 +462,7 @@ body {
   height: 36px;
   width: 36px;
   top: -108%;
-  left: -10%;
+  left: -7%;
   position: absolute;
   cursor: pointer;
   color: white;

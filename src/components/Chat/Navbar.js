@@ -1,22 +1,32 @@
 import React, { useState, useEffect } from 'react'
 import { Bird } from 'phosphor-react'
-import { logoutUser } from '../../auth'
+import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import { auth } from '../../firebase'
-import { onAuthStateChanged } from 'firebase/auth'
 
 const Navbar = () => {
+  const [currentUser, setUser] = useState('')
   // Current user
-  const [currentUser, setUser] = useState({})
-
   useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => setUser(currentUser))
+    const token = localStorage.getItem('token')
+    const getUser = async () => {
+      try {
+        const u = await axios.post('http://127.0.0.1:4000/user', {
+          token
+        })
+        console.log(u)
+        setUser(u)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    getUser()
   }, [])
 
   const navigate = useNavigate()
 
   const signout = () => {
-    logoutUser(navigate)
+    localStorage.removeItem('token')
+    navigate('/')
   }
 
   return (
@@ -25,10 +35,10 @@ const Navbar = () => {
         <Bird className='navbar-icon'/>
         <p>Hermes-Chat</p>
       </div>
-      <div className='navbar-user'>
-        <img src={currentUser.photoURL}/>
-        <span>{currentUser.displayName}</span>
-      </div>
+      { currentUser && <div className='navbar-user'>
+        <img src={currentUser.data.user.photoURL}/>
+        <span>{currentUser.data.user.username}</span>
+      </div>}
       <button className='logout-btn' onClick={signout}>Logout</button>
     </div>
   )

@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react'
 import { PlusCircle } from 'phosphor-react'
-import { AuthContext } from '../../context/AuthContext'
 import { ChatContext } from '../../context/ChatContext'
 import { addDoc, collection, doc, serverTimestamp, Timestamp, updateDoc } from 'firebase/firestore'
 import { db, storage } from '../../firebase'
@@ -11,7 +10,6 @@ const Input = () => {
   const [text, setText] = useState('')
   const [file, setFile] = useState(null)
 
-  const { currentUser } = useContext(AuthContext)
   const { data } = useContext(ChatContext)
   const handleSend = () => {
     const sendFileMessage = async () => {

@@ -20,8 +20,8 @@ const Navbar = () => {
         <p>Hermes-Chat</p>
       </div>
       { currentUser && <div className='navbar-user'>
-        <img src={currentUser.data.user.photoURL}/>
-        <span>{currentUser.data.user.username}</span>
+        <img src={currentUser.photoURL}/>
+        <span>{currentUser.username}</span>
       </div>}
       <button className='logout-btn' onClick={signout}>Logout</button>
     </div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { login } from '../auth'
+import { toast } from 'react-toastify'
 
 const PopUp = ({ setShowPopUp, setShowRegister }) => {
   const [email, setEmail] = useState('')
@@ -13,7 +14,7 @@ const PopUp = ({ setShowPopUp, setShowRegister }) => {
     e.preventDefault()
 
     if (!email || !password) {
-      alert('Please fill-in all data')
+      toast.error('Please fill-in all data')
       return
     }
     login(email, password, navigate, setShowPopUp)

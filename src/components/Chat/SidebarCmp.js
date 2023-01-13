@@ -7,6 +7,7 @@ const SidebarCmp = ({ setShowChat }) => {
   const setChat = () => {
     setShowChat(true)
   }
+
   return (
     <div className='sidebar'>
       <Navbar/>

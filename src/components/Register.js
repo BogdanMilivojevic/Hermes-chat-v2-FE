@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { register } from '../auth'
 import { useNavigate } from 'react-router-dom'
 import { Image, ArrowCircleLeft } from 'phosphor-react'
+import { toast } from 'react-toastify'
 
 const Register = ({ setShowRegister, setShowPopUp }) => {
   const [email, setEmail] = useState('')
@@ -17,10 +18,14 @@ const Register = ({ setShowRegister, setShowPopUp }) => {
     e.preventDefault()
 
     if (!email || !password || !username || !file || !passwordConfirm) {
-      alert('Please fill-in all data')
-      return
+      toast.error('Please fill in all data')
+    } else if (password.length < 6 || passwordConfirm.length < 6) {
+      toast.error('Password must have at least 6 characters')
+    } else if (username.length < 6) {
+      toast.error('Username must have at least 6 characters')
+    } else {
+      register(email, password, username, file, passwordConfirm, navigate, setShowRegister, setUsername, setEmail, setPassword, setFile, setPasswordConfirm)
     }
-    register(email, password, username, file, passwordConfirm, navigate, setShowRegister, setUsername, setEmail, setPassword, setFile, setPasswordConfirm)
   }
 
   return (

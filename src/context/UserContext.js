@@ -10,8 +10,10 @@ export const UserContextProvider = ({ children }) => {
     const token = localStorage.getItem('token')
     const getUser = async () => {
       try {
-        const u = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/user`, {
-          token
+        const u = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/me`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         })
         setCurrentUser(u.data.user)
       } catch (err) {

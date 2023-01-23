@@ -13,8 +13,7 @@ export const ChatContextProvider = ({ children }) => {
     switch (action.type) {
       case 'CHANGE_USER':
         return {
-          user: action.payload.u,
-          chat: action.payload.c
+          conversation: action.payload
         }
       default:
         return state

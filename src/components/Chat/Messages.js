@@ -56,13 +56,15 @@ const Messages = () => {
 
   useEffect(() => {
     const getMessages = async () => {
-      const conversationId = data.user.ConversationId
+      const conversationId = data.conversation.id
+      const token = localStorage.getItem('token')
       try {
-        const conversation = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/conversation/getMessages`, {
-          conversationId,
-          messageCount
+        const conversation = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/conversation/${conversationId}?messagecount=${messageCount}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         })
-        setMessages(conversation.data.conversation)
+        conversation.data.conversation ? setMessages(conversation.data.conversation) : console.log(conversation.data.message)
       } catch (err) {
         console.log(err)
       }

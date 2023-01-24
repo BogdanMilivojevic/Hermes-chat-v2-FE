@@ -40,25 +40,25 @@ const Register = ({ setShowRegister, setShowPopUp }) => {
         </div>
         <form className='login-form' onSubmit={onSubmit}>
           <div className='form-label-register-username'>
-            <label>Username</label>
-            <input type='text' placeholder='Your username' value={username} onChange={(e) => setUsername(e.target.value)}/>
+            <label htmlFor='username'>Username</label>
+            <input type='text' placeholder='username' value={username} onChange={(e) => setUsername(e.target.value)}/>
           </div>
           <div className='form-label-register-email'>
             <label>Email</label>
-            <input type='email' placeholder='Your email' value={email} onChange={(e) => setEmail(e.target.value)}/>
+            <input type='email' placeholder='email' value={email} onChange={(e) => setEmail(e.target.value)}/>
           </div>
           <div className='form-label-register-password'>
             <label>Password</label>
-            <input type='password' placeholder='Your password' value={password} onChange={(e) => setPassword(e.target.value)}/>
+            <input type='password' placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
           </div>
           <div className='form-label-register-confirm-password'>
             <label>Password Confirm</label>
-            <input type='password' placeholder='Your password' value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)}/>
+            <input type='password' placeholder='password-confirm' value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)}/>
           </div>
           <label className='form-label-image' htmlFor="file">
-            <input style={{ display: 'none' }} type="file" id="file"onChange={(e) => setFile(e.target.files[0])} />
+            <input style={{ display: 'none' }} type="file" value={file} id="file"onChange={(e) => setFile(e.target.files[0])}/>
             <Image className='image-icon'/>
-            <span>Add an avatar</span>
+            <span>Add profile image</span>
           </label>
           <button className='login-btn'>Register now</button>
         </form>

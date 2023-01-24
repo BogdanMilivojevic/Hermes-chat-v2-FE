@@ -32,11 +32,11 @@ const PopUp = ({ setShowPopUp, setShowRegister }) => {
         <form className='login-form' onSubmit={onSubmit}>
           <div className='form-label-email'>
             <label>Email</label>
-            <input type='email' placeholder='Your email' value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input type='email' placeholder='email' value={email} onChange={(e) => setEmail(e.target.value)}/>
           </div>
           <div className='form-label-password'>
             <label>Password</label>
-            <input type='password' placeholder='Your password' value={password} onChange={(e) => setPassword(e.target.value)}/>
+            <input type='password' placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
           </div>
           <button className='login-btn'>Login</button>
         </form>

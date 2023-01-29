@@ -17,7 +17,12 @@ const Search = () => {
     }
 
     try {
-      const u = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/${username}`)
+      const token = localStorage.getItem('token')
+      const u = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/${username}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
       u.data.message === 'User found' ? setSearchedUser(u.data.user) : setNotFound(true)
     } catch (err) {
       console.log(err)
@@ -59,7 +64,7 @@ const Search = () => {
           <span className='user-name'>No user found!</span>
         </div>
         </div>}
-      {searchedUser && <div className='user-chat searched' onClick={() => createConversation(searchedUser.username, setSearchedUser)}>
+      {searchedUser && <div className='user-chat searched' onClick={() => createConversation(searchedUser.username, setSearchedUser)} data-testid='user-found'>
         <img className='user-picture' src={searchedUser.photoURL}/>
         <div className='user-info'>
           <span className='user-name'>{searchedUser.username}</span>

@@ -7,7 +7,6 @@ const Navbar = () => {
   const navigate = useNavigate()
 
   const { currentUser } = useContext(UserContext)
-
   const signout = () => {
     localStorage.removeItem('token')
     navigate('/')

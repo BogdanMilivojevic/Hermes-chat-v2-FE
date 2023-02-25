@@ -2,10 +2,16 @@ import React, { useContext } from 'react'
 // import { Image, FileText } from 'phosphor-react'
 import { ChatContext } from '../../context/ChatContext'
 import { ConversationContext } from '../../context/ConversationContext'
+import { SocketContext } from '../../context/SocketContext'
 
 const Chats = ({ setChat }) => {
-  const { conversation } = useContext(ConversationContext)
+  const { conversation, setIsNew } = useContext(ConversationContext)
+  const { socket } = useContext(SocketContext)
   const { dispatch } = useContext(ChatContext)
+
+  socket.current?.on('newMessage', (payload) => {
+    setIsNew(true)
+  })
 
   const handleSelect = (data) => {
     dispatch({ type: 'CHANGE_USER', payload: data })

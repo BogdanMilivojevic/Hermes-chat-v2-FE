@@ -23,6 +23,7 @@ export const ConversationContextProvider = ({ children }) => {
       } catch (err) {
         console.log(err)
       }
+      setIsNew(false)
       return () => {
         getChats()
       }
@@ -31,7 +32,7 @@ export const ConversationContextProvider = ({ children }) => {
   }, [currentUser, isNew])
 
   return (
-    <ConversationContext.Provider value={{ conversation, isNew, setIsNew }}>
+    <ConversationContext.Provider value={{ conversation, setIsNew }}>
       {children}
     </ConversationContext.Provider>
   )

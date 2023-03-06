@@ -2,9 +2,11 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import Message from './Message'
 import { ChatContext } from '../../context/ChatContext'
 import axios from 'axios'
+import { SocketContext } from '../../context/SocketContext'
 const Messages = () => {
   const [messages, setMessages] = useState('')
   const { data } = useContext(ChatContext)
+  const { socket } = useContext(SocketContext)
   const [messageCount, setMessageCount] = useState(25)
   const [loading, setLoading] = useState(false)
   const myRef = useRef()
@@ -52,7 +54,11 @@ const Messages = () => {
   // Scrolling to the latest message if there is a new latest message
   useEffect(() => {
     myRef.current.lastElementChild?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages[lastIndex] ? messages[lastIndex].body : null])
+  }, [messages[lastIndex] ? messages[lastIndex]?.body : null])
+
+  socket.current?.on('newMessage', (payload) => {
+    setMessages([...messages, payload])
+  })
 
   useEffect(() => {
     const getMessages = async () => {
@@ -64,7 +70,7 @@ const Messages = () => {
             Authorization: `Bearer ${token}`
           }
         })
-        conversation.data.conversation ? setMessages(conversation.data.conversation) : console.log(conversation.data.message)
+        conversation.data.conversation ? setMessages(conversation.data.conversation.messages) : console.log(conversation.data.message)
       } catch (err) {
         console.log(err)
       }

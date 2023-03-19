@@ -13,8 +13,8 @@ const Conversation = ({ setShowChat }) => {
       <div className='chat'>
         <div className='chat-info'>
           <button className='back-btn' onClick={() => setShowChat(false)}> Go back</button>
-          {data.conversation.Users && <span>{data.conversation.Users.username}</span>}
-          {data.conversation.Users && <img src={data.conversation.Users.photoURL}/>}
+          {data.conversation.User && <span>{data.conversation.User.username}</span>}
+          {data.conversation.User.photoURL && <img src={ data.conversation.User.photoURL }/>}
           <div className='navbar-logo-chat'>
             <Bird className='navbar-icon'/>
             <p>Hermes-Chat</p>

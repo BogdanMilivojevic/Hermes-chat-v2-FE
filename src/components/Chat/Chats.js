@@ -9,6 +9,7 @@ const Chats = ({ setChat }) => {
   const { socket } = useContext(SocketContext)
   const { dispatch } = useContext(ChatContext)
 
+  console.log(conversation)
   socket.current?.on('newMessage', (payload) => {
     setIsNew(true)
   })
@@ -20,9 +21,9 @@ const Chats = ({ setChat }) => {
     <div className='chats'>
       { conversation.length > 0 && conversation.map((chat, i) => (
         <div className='user-chat' key={i} onClick={() => { handleSelect(chat); setChat() }}>
-          {chat.Users.photoURL && <img className='user-picture' src={chat.Users.photoURL }/>}
+          {chat.User.photoURL && <img className='user-picture' src={chat.User.photoURL}/>}
           <div className='user-info'>
-            {chat.Users.username && <span className='user-name'> {chat.Users.username}</span>}
+            {chat.User.username && <span className='user-name'> {chat.User.username}</span>}
             {chat.lastMessage?.body && <p className='last-m'>{`${chat.lastMessage.body}`}</p>}
             {/* <p className='last-m-content'>
               <Image className='last-m-icon'/>

@@ -9,7 +9,7 @@ const Register = ({ setShowRegister, setShowPopUp }) => {
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
   const [username, setUsername] = useState('')
-  const [file, setFile] = useState(null)
+  const [file, setFile] = useState('')
 
   // Navigation
   const navigate = useNavigate()
@@ -56,7 +56,7 @@ const Register = ({ setShowRegister, setShowPopUp }) => {
             <input type='password' placeholder='password-confirm' value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)}/>
           </div>
           <label className='form-label-image' htmlFor="file">
-            <input style={{ display: 'none' }} type="file" value={file} id="file"onChange={(e) => setFile(e.target.files[0])}/>
+            <input style={{ display: 'none' }} type="file" id="file"onChange={(e) => setFile(e.target.files[0])}/>
             <Image className='image-icon'/>
             <span>Add profile image</span>
           </label>

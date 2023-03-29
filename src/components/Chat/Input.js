@@ -5,27 +5,49 @@ import { ChatContext } from '../../context/ChatContext'
 
 const Input = () => {
   const [text, setText] = useState('')
+  const [file, setFile] = useState('')
   const { data } = useContext(ChatContext)
 
-  const sendMessage = async () => {
+  const send = () => {
     const conversationId = data.conversation.id
     const token = localStorage.getItem('token')
-    try {
-      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/message/${conversationId}`, {
-        text
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-    } catch (err) {
-      console.log(err)
+    const sendMessage = async () => {
+      try {
+        await axios.post(`${process.env.REACT_APP_API_BASE_URL}/message/${conversationId}`, {
+          text
+        }, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+      } catch (err) {
+        console.log(err)
+      }
+      setText('')
     }
-    setText('')
+    const sendImage = async () => {
+      try {
+        await axios.post(`${process.env.REACT_APP_API_BASE_URL}/message/${conversationId}`, {
+          file
+        }, {
+          headers: {
+            'Content-type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`
+          }
+        })
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    if (text) {
+      sendMessage()
+    } else {
+      sendImage()
+    }
   }
 
   const handleKey = (e) => {
-    text && e.key === 'Enter' && sendMessage()
+    (text || file) && e.key === 'Enter' && send()
   }
 
   return (
@@ -34,9 +56,9 @@ const Input = () => {
       <div className='input-send'>
         <label htmlFor="file">
           <PlusCircle className='input-icon'/>
-          {/* <input style={{ display: 'none' }} type="file" id="file"onChange={(e) => setFile(e.target.files[0])} onKeyDown={handleKey} /> */}
+          <input style={{ display: 'none' }} type="file" id="file"onChange={(e) => setFile(e.target.files[0])} onKeyDown={handleKey} />
         </label>
-        <button className='input-btn' onClick={ () => sendMessage()}>Send</button>
+        <button className='input-btn' onClick={ () => (file || text) && send()}>Send</button>
       </div>
     </div>
   )

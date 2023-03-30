@@ -9,7 +9,7 @@ const Register = ({ setShowRegister, setShowPopUp }) => {
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
   const [username, setUsername] = useState('')
-  const [file, setFile] = useState('')
+  const [avatar, setAvatar] = useState('')
 
   // Navigation
   const navigate = useNavigate()
@@ -17,14 +17,14 @@ const Register = ({ setShowRegister, setShowPopUp }) => {
   const onSubmit = (e) => {
     e.preventDefault()
 
-    if (!email || !password || !username || !file || !passwordConfirm) {
+    if (!email || !password || !username || !avatar || !passwordConfirm) {
       toast.error('Please fill in all data')
     } else if (password.length < 6 || passwordConfirm.length < 6) {
       toast.error('Password must have at least 6 characters')
     } else if (username.length < 6) {
       toast.error('Username must have at least 6 characters')
     } else {
-      register(email, password, username, file, passwordConfirm, navigate, setShowRegister, setUsername, setEmail, setPassword, setFile, setPasswordConfirm)
+      register(email, password, username, avatar, passwordConfirm, navigate, setShowRegister, setUsername, setEmail, setPassword, setAvatar, setPasswordConfirm)
     }
   }
 
@@ -56,7 +56,7 @@ const Register = ({ setShowRegister, setShowPopUp }) => {
             <input type='password' placeholder='password-confirm' value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)}/>
           </div>
           <label className='form-label-image' htmlFor="file">
-            <input style={{ display: 'none' }} type="file" id="file"onChange={(e) => setFile(e.target.files[0])}/>
+            <input style={{ display: 'none' }} type="file" id="file"onChange={(e) => setAvatar(e.target.files[0])}/>
             <Image className='image-icon'/>
             <span>Add profile image</span>
           </label>

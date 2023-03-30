@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 import axios from 'axios'
 
 // REGISTER USER
-export const register = async (email, password, username, file, passwordConfirm, navigate, setShowRegister, setUsername, setEmail, setPassword, setFile, setPasswordConfirm) => {
+export const register = async (email, password, username, avatar, passwordConfirm, navigate, setShowRegister, setUsername, setEmail, setPassword, setFile, setPasswordConfirm) => {
   if (passwordConfirm !== password) toast.error('Passwords must match')
 
   try {
@@ -11,7 +11,7 @@ export const register = async (email, password, username, file, passwordConfirm,
       username,
       email,
       password,
-      file
+      avatar
     }, {
       headers: {
         'Content-type': 'multipart/form-data'

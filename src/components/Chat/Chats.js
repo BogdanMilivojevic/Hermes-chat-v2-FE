@@ -9,7 +9,6 @@ const Chats = ({ setChat }) => {
   const { socket } = useContext(SocketContext)
   const { dispatch } = useContext(ChatContext)
 
-  console.log(conversation)
   socket.current?.on('newMessage', (payload) => {
     setIsNew(true)
   })

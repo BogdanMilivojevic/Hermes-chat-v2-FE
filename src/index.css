@@ -546,6 +546,7 @@ body {
   background-color: #5675FF;
   color: white;
   gap: 30px;
+
 }
 
 .navbar-logo {
@@ -572,6 +573,40 @@ body {
   gap: 10px;
   font-size: 20px;
   font-weight: 600;
+}
+
+
+.change-name {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.change-name input {
+  padding: 4px 8px;
+  outline: none;
+  border: none;
+  font: 14px;
+}
+
+.change-name button {
+  font-size: 14px;
+  border: none;
+  padding: 6px 12px;
+  color: white;
+  background-color: #8A9FFF;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.change-name button:hover {
+  background-color: #A4B4FF;
+}
+
+.change-name-icon {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
 }
 
 .navbar-user img {

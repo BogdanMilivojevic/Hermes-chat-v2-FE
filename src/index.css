@@ -631,6 +631,21 @@ body {
   background-color: #A4B4FF;
 }
 
+.chat-delete-btn {
+  font-size: 14px;
+  border: none;
+  padding: 4px 8px;
+  color: white;
+  cursor: pointer;
+  background-color: #8A9FFF;
+  margin-left: auto;
+  z-index: 100;
+}
+
+.chat-delete-btn:hover {
+  background-color: #A4B4FF;
+}
+
 .search {
   background-color: #A5B4FF
 }

@@ -13,10 +13,6 @@ const Message = ({ message }) => {
   const options = { hour: 'numeric', minute: 'numeric', weekday: 'long' }
   const time = new Intl.DateTimeFormat('en-US', options).format(date)
 
-  const downloadFile = (file) => {
-    window.open(file, '_blank', 'noopener,noreferrer')
-  }
-
   return (
     <div className={`message ${message.userId === currentUser.id && 'owner'}`}>
       <div className='message-info'>

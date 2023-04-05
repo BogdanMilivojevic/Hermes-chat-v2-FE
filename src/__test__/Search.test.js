@@ -1,4 +1,4 @@
-import { render, fireEvent, screen, getByPlaceholderText } from '@testing-library/react'
+import { render, fireEvent, screen } from '@testing-library/react'
 import Search from '../components/Chat/Search'
 import React from 'react'
 import { UserContextProvider } from '../context/UserContext'

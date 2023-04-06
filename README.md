@@ -35,7 +35,7 @@ localhost:3000
 
 ## Deployment   
 
-The app is deployed on Vercel at the following link: https://hermes-chat.vercel.app/ 
+The app is deployed on Vercel at the following link: https://hermes-chat-v2.vercel.app/
 
 Deploy is done automatically when merging into master.
 ## Naming conventions

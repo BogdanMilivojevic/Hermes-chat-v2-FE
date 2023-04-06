@@ -42,7 +42,7 @@ The app is deployed on Vercel at the following link: https://hermes-chat-v2.verc
 Deploy is done automatically when merging into master.
 ## Naming conventions
 
-Branches should be named as following: HE-30-Popup-Fix,in this example HE-30 is the number of the ticket on Trello and after that is a short description. Commit messages should also have this format.
+Branches should be named as following: HE-12-FE-Delete-conversation,in this example FE stands for frontend and 13 is the number of the ticket on Trello and after that is a short description. Commit messages should also have this format.
 
 
 

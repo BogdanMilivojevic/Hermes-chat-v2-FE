@@ -2,6 +2,7 @@
 
 # Hermes-chat  
 Hermes-chat-v2-FE is a React frontend for a real-time messaging app
+\
 Hermes-chat-v2-BE or the server side can be found on Github: https://github.com/BogdanMilivojevic/Hermes-chat-v2-BE
 
 ![Homescreen](/public/uiOne.png)

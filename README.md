@@ -10,9 +10,9 @@ Hermes-chat-v2-BE or the server side can be found on Github: https://github.com/
 ![Chat](/public/uiTwo.png)
 
 Features:
-- Firebase authentication
+- Websocket enables real-time messaging
 - Debounced users search
-- Messages can contain text, image and file
+- Messages can contain text and images
 - Timestamp of the sent messages
 - Infinite scroll pagination in chat
 - Browser notification

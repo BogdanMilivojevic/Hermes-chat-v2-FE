@@ -1,7 +1,8 @@
-[![GitHub Super-Linter](https://github.com/BogdanMilivojevic/hermes-chat/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
+![Linter](https://github.com/BogdanMilivojevic/Hermes-chat-v2-FE/actions/workflows/linter.yml/badge.svg)
 
 # Hermes-chat  
-Hermes-chat is a real-time messaging app, made with React using Firebase  
+Hermes-chat-v2-FE is a React frontend for a real-time messaging app
+Hermes-chat-v2-BE or the server side can be found on Github: https://github.com/BogdanMilivojevic/Hermes-chat-v2-BE
 
 ![Homescreen](/public/uiOne.png)
 

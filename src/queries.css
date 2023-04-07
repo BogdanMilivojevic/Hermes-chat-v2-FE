@@ -590,4 +590,16 @@
         margin-right: 5px;
     }
 
+    .form-label-register-username {
+        gap: 20px;
+    }
+
+    .form-label-register-email {
+        gap: 58px;
+    }
+
+    .orm-label-register-password {
+        gap: 25px;
+    }
+
 }

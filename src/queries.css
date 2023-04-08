@@ -494,6 +494,11 @@
         gap: 10px;
     }
 
+    .change-name {
+        top: 126%;
+        right: -10%;
+    }
+
     .navbar-logo {
         margin-right: 15px;
     }
